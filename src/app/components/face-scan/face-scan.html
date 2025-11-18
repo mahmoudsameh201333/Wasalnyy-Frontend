@@ -1,11 +1,26 @@
-<div class="face-scan">
-  <h2>@if(mode === 'register') { Register your face } @else { Face login }</h2>
+<div class="face-scan-container">
+  <!-- Video background -->
+  <video 
+    #video 
+    autoplay 
+    playsinline 
+    [style.display]="preview ? 'none' : 'block'"
+    class="background-media">
+  </video>
 
-  <video #video autoplay playsinline></video>
+  <!-- Captured image preview -->
+   @if(preview){
+    <img [src]="preview" class="background-media" />
+   }
+  
+  <!-- Overlay controls -->
+  <div class="overlay">
+    <h2>{{ mode === 'register' ? 'Register your face' : 'Face login' }}</h2>
 
-  <button (click)="captureAndUpload()" class="btn-primary text-white" >@if(mode==='register'){Register Face}@else{Login with Face}</button>
+    <button (click)="captureAndUpload()" class="btn btn-outline-success" [disabled]="buttonText">
+      {{ buttonText || (mode === 'register' ? 'Register Face' : 'Login with Face') }}
+    </button>
 
-  @if(preview) {
-    <img [src]="preview" class="preview" />
-  }
+    <p class="status-message">{{ loginResult }}</p>
+  </div>
 </div>

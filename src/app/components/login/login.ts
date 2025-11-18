@@ -28,13 +28,11 @@ export class LoginComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.role = this.route.snapshot.paramMap.get('role')!;
-  console.log(this.role); // "driver"
   }
 
   login() {
     this.authService.login(this.loginData,this.role).subscribe({
       next: (res) => {
-//        alert(res.message);
         this.error='';   
         this.authService.saveToken(res.token);
         this.authService.saveRole(this.role);
