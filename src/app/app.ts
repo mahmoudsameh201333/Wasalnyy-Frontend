@@ -4,7 +4,7 @@ import { ChooseRegisterComponent } from "./components/reg-option/reg-option";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ChooseRegisterComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

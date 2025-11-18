@@ -5,12 +5,13 @@ import { environment } from '../../enviroments/enviroment';
 import { LoginDto } from '../models/login';
 import { RegisterDriverDto } from '../models/register-driver';
 import { RegisterRiderDto } from '../models/register-rider';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private baseUrl = `${environment.apiUrl}/auth`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router) {}
 
   // 🔹 Login
   login(dto: LoginDto, role?: string): Observable<any> {
@@ -21,8 +22,21 @@ export class AuthService {
   }
 
   // 🔹 Register Driver
-  registerDriver(dto: RegisterDriverDto): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register/driver`, dto);
+  registerDriver(dto: RegisterDriverDto) {
+     this.http.post(`${this.baseUrl}/register/driver`, dto).subscribe({
+        next: (res:any) => {
+          console.log(res);
+          // Save token
+          this.saveToken(res.token);
+
+          // Navigate to face scan registration
+        this.router.navigate([`/face-scan/register/${res.driverId}`]);
+        },
+        error: (err) => {
+          console.error(err.error.message);
+          alert('Driver registration failed');
+        }
+      });
   }
 
   // 🔹 Register Rider

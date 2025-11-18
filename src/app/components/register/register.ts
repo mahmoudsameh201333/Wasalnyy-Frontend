@@ -56,15 +56,6 @@ export class RegisterDriverComponent {
 
   registerDriver() {
     console.log(JSON.stringify(this.driver, null, 2));
-    this.authService.registerDriver(this.driver).subscribe({
-      next: (res) => {
-        alert(res.message);
-        this.authService.saveToken(res.token);
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Registration failed');
-      }
-    });
+    this.authService.registerDriver(this.driver);
   }
 }
