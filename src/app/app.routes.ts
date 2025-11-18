@@ -8,18 +8,26 @@ import { DriverDashboard } from './components/driver-dashboard/driver-dashboard'
 import { RiderDashboard } from './components/rider-dashboard/rider-dashboard';
 import { PaymentSuccessful } from './components/payment-successful/payment-successful';
 import { PaymentFailed } from './components/payment-failed/payment-failed';
+import { AdminDashboard } from './components/admin-dashboard/admin-dashboard';
+import { AuthGuard } from './auth/auth-guard';
+import { DashboardRedirectComponent } from './components/dashboard-redirect/dashboard-redirect';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'choose-user-type', pathMatch: 'full' },
+  // default route redirects based on login status
+  { path: '', component: DashboardRedirectComponent },
   { path: 'login/:role', component: LoginComponent },
-  { path: 'choose-user-type', component: ChooseUserComponent ,pathMatch:'full'},
+  { path: 'choose-user-type', component: ChooseUserComponent, pathMatch:'full' },
   { path: 'register-driver', component: RegisterDriverComponent },
   { path: 'register-rider', component: RegisterRider },
   { path: 'face-scan/register/:userId', component: FaceScan },
   { path: 'face-scan/login', component: FaceScan },
-  {path: 'driver-dashboard', component: DriverDashboard},
-  {path: 'rider-dashboard', component: RiderDashboard},
-  {path:'payment-successful', component:PaymentSuccessful},
-  {path:'payment-failed', component:PaymentFailed},
-  {path: '**', redirectTo: 'choose-user-type' }
+
+  { path: 'driver-dashboard', component: DriverDashboard, canActivate: [AuthGuard], data: { role: 'Driver' } },
+  { path: 'rider-dashboard', component: RiderDashboard, canActivate: [AuthGuard], data: { role: 'Rider' } },
+  { path: 'admin-dashboard', component: AdminDashboard, canActivate: [AuthGuard], data: { role: 'Admin' } },
+
+  { path: 'payment-successful', component: PaymentSuccessful },
+  { path: 'payment-failed', component: PaymentFailed },
+
+  { path: '**', redirectTo: '' } // fallback to dashboard redirect
 ];

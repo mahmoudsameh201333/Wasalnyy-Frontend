@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RegisterRiderDto } from '../../models/register-rider';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../auth/auth-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 

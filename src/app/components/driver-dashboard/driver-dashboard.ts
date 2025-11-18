@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-driver-dashboard',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   styles: ``,
 })
 export class DriverDashboard {
+    constructor(private authService: AuthService) {}
+
+  logout() {
+    this.authService.logout();
+  }
 
 }

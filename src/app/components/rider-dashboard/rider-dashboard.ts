@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PaymentService } from '../../services/payment.service';
+import { AuthService } from '../../auth/auth-service';
 
 @Component({
   selector: 'app-rider-dashboard',
@@ -10,7 +11,7 @@ import { PaymentService } from '../../services/payment.service';
 })
 export class RiderDashboard {
 paymentValue:number=0;
-  constructor(private paymentService: PaymentService) {}
+  constructor(private paymentService: PaymentService,private authService: AuthService) {}
 
   makePayment(){
     this.paymentService.MakePayment(this.paymentValue).subscribe((res:any) => {
@@ -19,5 +20,9 @@ paymentValue:number=0;
     }, error => {
       console.error('Payment failed', error);
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

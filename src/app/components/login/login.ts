@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../auth/auth-service';
 import { LoginDto } from '../../models/login';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
 //        alert(res.message);
         this.error='';   
         this.authService.saveToken(res.token);
+        this.authService.saveRole(this.role);
         let rolePath = this.role.toLowerCase() + '-dashboard';
         this.router.navigate([`/${rolePath}`]);
 

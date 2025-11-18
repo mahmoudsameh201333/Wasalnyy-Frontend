@@ -48,12 +48,20 @@ export class AuthService {
   saveToken(token: string) {
     localStorage.setItem('token', token);
   }
+  saveRole(role: string) {
+    localStorage.setItem('role', role);
+  }
 
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+  getRole(): string | null {
+    return localStorage.getItem('role');
+  }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    this.router.navigate(['choose-user-type']);
   }
 }

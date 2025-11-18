@@ -6,7 +6,7 @@ import { Capacity } from '../../enums/capacity';
 import { transmission } from '../../enums/transmission';
 import { EngineType } from '../../enums/EngineType';
 import { RegisterDriverDto } from '../../models/register-driver';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../auth/auth-service';
 
 
 @Component({

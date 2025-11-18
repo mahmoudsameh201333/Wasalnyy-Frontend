@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FaceService } from '../../services/face.service';
-import { AuthService } from '../../services/auth';
+import { AuthService } from '../../auth/auth-service';
 @Component({
   selector: 'app-face-scan',
   templateUrl: './face-scan.html',
@@ -54,6 +54,7 @@ export class FaceScan implements OnInit, OnDestroy {
         this.faceService.uploadDriverFace(this.userId!, file).subscribe({
           next: (res:any) => {
             alert('Face registered');
+             this.router.navigate(['/login/Driver']);
            // this.router.navigate(['/driver-dashboard']); // or wherever
           },
           error: (err:any) => { console.error(err); alert('Face registration failed'); }
@@ -63,6 +64,7 @@ export class FaceScan implements OnInit, OnDestroy {
           next: (res: any) => {
             if ( res.token) {
               this.authService.saveToken(res.token);
+              this.authService.saveRole("Driver");
               this.router.navigate(['/driver-dashboard']); // or wherever
               alert('Login successful');
             } else {
