@@ -11,23 +11,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class DriverMap {
 
-    currentLatitude: number = 0;
-  currentLongitude: number = 0;
+    currentLatitude: number|null = null;
+  currentLongitude: number|null = null;
   tripId: string ="";
 constructor(private driverHubService: DriverHubService, private locationService: LocationService) {}
 
 setAvailable(){
-  this.locationService.getCurrentPosition().then(currentLocation => {
-    this.driverHubService.SetAsAvailable({Lat: currentLocation.lat, Lng: currentLocation.lng}).subscribe(res => {
-      console.log('Driver set as available', res);
+   this.driverHubService.SetAsAvailable({Lat:this.currentLatitude!, Lng: this.currentLongitude!}).subscribe(res => {
+    console.log('Driver set as available', res);
     });
-  }).catch(error => {
-    console.error('Error getting current location', error);
-  });
+
 }
 
 updateLocation(){
-  this.driverHubService.UpdateLocation({Lat: this.currentLatitude, Lng: this.currentLongitude}).subscribe(res => {
+  this.driverHubService.UpdateLocation({Lat: this.currentLatitude!, Lng: this.currentLongitude!}).subscribe(res => {
     console.log('Driver location updated', res);
   });
 }
@@ -43,3 +40,12 @@ acceptTrip(){
 }
 
 }
+
+//==> Get currect location code snippet
+  // this.locationService.getCurrentPosition().then(currentLocation => {
+  //   this.driverHubService.SetAsAvailable({Lat: currentLocation.lat, Lng: currentLocation.lng}).subscribe(res => {
+  //     console.log('Driver set as available', res);
+  //   });
+  // }).catch(error => {
+  //   console.error('Error getting current location', error);
+  // });
