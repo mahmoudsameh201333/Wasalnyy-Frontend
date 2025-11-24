@@ -3,27 +3,26 @@ import * as signalR from '@microsoft/signalr';
 import { AuthService } from '../auth/auth-service';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from '../../enviroments/enviroment';
+import { TripInfoService } from './trip-info.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SignalrServiceTs {
-  role: string = '';
   hubUrl: string = environment.hubUrl;
+  userRole:string="";
   private hubConnection!: signalR.HubConnection;
   public connectionStarted = false;
   public pendingTripSubject = new BehaviorSubject<any>(null);
-
-  constructor(private authService: AuthService) {
-    this.role = this.authService.getRole()!;
-  }
-
+  constructor(private authService: AuthService,private tripInfoService:TripInfoService) {
+    this.userRole=this.authService.getRole()!;
+   }
+  
   startConnection(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (this.connectionStarted) {
-        console.log('Connection already started');
-        return resolve();
-      }
+     if (this.connectionStarted) {
+      return resolve();
+     }
 
       this.hubConnection = new signalR.HubConnectionBuilder()
         .withUrl(this.hubUrl, {
@@ -36,8 +35,50 @@ export class SignalrServiceTs {
       this.hubConnection
         .start()
         .then(() => {
+
+          
           console.log('SignalR Connected');
           this.connectionStarted = true;
+          
+          
+          this.hubConnection.on("pendingTrip", (trip) => {
+            this.tripInfoService.updateTrip(trip);
+            this.tripInfoService.setInTrip(true);
+          });
+          this.hubConnection.on('tripStarted', trip => this.tripInfoService.updateTrip(trip));
+          this.hubConnection.on('tripEnded', () =>{
+            this.tripInfoService.clearTrip();
+            this.tripInfoService.setInTrip(false);
+            this.tripInfoService.clearDriver();
+            this.tripInfoService.clearListOfAvailableTrips();
+          });      
+          if(this.userRole==="Rider"){
+          this. hubConnection.on('tripAccepeted', driver=> this.tripInfoService.updateDriver(driver));
+          }
+          else if(this.userRole==="Driver"){
+         this.hubConnection.on("availableTripsInZone", (trip) =>this.tripInfoService.updateListOfAvailableTrips(trip));
+         this.hubConnection.on("tripAccepeted", (trip) => {
+          this.tripInfoService.updateTrip(trip)
+          this.tripInfoService.setInTrip(true);
+         });
+          }
+          
+          
+          
+          
+          
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
           resolve();
         })
         .catch((err) => {
@@ -46,9 +87,9 @@ export class SignalrServiceTs {
         });
     });
   }
-  getHubConnection(): signalR.HubConnection {
-  return this.hubConnection;
-  }
+  // getHubConnection(): signalR.HubConnection {
+  // return this.hubConnection;
+  // }
 
   endConnection(): Promise<void> {
      return new Promise((resolve, reject) => {
