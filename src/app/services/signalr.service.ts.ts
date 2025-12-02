@@ -28,15 +28,18 @@ export class SignalrServiceTs {
         .build();
 
           this.hubConnection.on("pendingTrip", (trip) => {
-            const driverId=trip.driverId;
-            console.log(driverId);
             this.tripInfoService.updateTrip(trip);
-          this.tripInfoService.setInTrip(true);
-          this.accountDataService.getDriverData(driverId).subscribe({next:res=>{
-            this.tripInfoService.updateDriver(res)
-          }
-        ,error:err=>{console.error(err)}
-        })
+            this.tripInfoService.setInTrip(true);
+            if(trip.tripStatus==="Accepted"){
+            
+              const driverId=trip.driverId;
+            this.accountDataService.getDriverData(driverId).subscribe({next:res=>{
+              this.tripInfoService.updateDriver(res)
+            }
+          ,error:err=>{console.error(err)}
+          })
+            }
+            
           });
           this.hubConnection.on('tripRequested',trip=>{
             this.tripInfoService.updateTrip(trip)})

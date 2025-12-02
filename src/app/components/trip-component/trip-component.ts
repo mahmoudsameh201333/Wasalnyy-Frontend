@@ -7,7 +7,7 @@ import { TripStatus } from '../../enums/tripStatus';
   selector: 'app-trip-component',
   imports: [CurrencyPipe],
   templateUrl: './trip-component.html',
-  styles: ``,
+  styleUrl: `./trip-component.css`,
 })
 export class TripComponent implements OnInit {
 

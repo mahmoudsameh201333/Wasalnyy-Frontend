@@ -1,12 +1,25 @@
- <div class="w-100 align-items-center shadow rounded-3 p-4">
+ <div class="align-items-center text-center shadow rounded-3 p-4">
             @if(this.role==="Driver"){
-            @if(activeTrip.tripStatus==='Accepted'){
-              <p>meet the rider at the pickup location</p>
+            @if(activeTrip.tripStatus==="Confirmed"){
+            <p>from</p>
+           <p class="fw-bold">{{activeTrip.pickUpName}}</p>
+           <p>to</p>
+           <p class="fw-bold">{{activeTrip.destinationName}}</p>
+
+           <p class="fw-bold"> distance: {{activeTrip.distanceKm.toFixed(2)}} Km</p>
+           
+           <p class="fw-bold">duration: {{activeTrip.durationMinutes.toFixed(2)}} minutes</p>
+           <p class="fw-bold">price:{{activeTrip.price.toFixed(1)|currency:'USD'}}</p>
+
+            }
+              @else if(activeTrip.tripStatus==='Accepted'){
+              <p>meet the rider at </p>
+              <p class="fw-bold">  {{activeTrip.pickUpName}}</p>
               
             }
             @else if(activeTrip.tripStatus==='Started'){
-              <p>trip started</p>
-              <p>you are on your way</p>
+          <p>you are on your way to </p>
+           <p class="fw-bold"> {{activeTrip.destinationName}}</p>
             }       
             } 
             @else {
@@ -14,28 +27,29 @@
                 <h1>please confirn your trip request</h1>
               }
               @else if(activeTrip.tripStatus==='Confirmed'){
-                <h1>trip confirmed</h1>
                 <p>matching your request with nearby drivers</p>
+                <div class="scan-bar"></div>
+
               }
-              @else if(activeTrip.tripStatus==='Accepted'){
-                <h2>Driver accepted your trip</h2>
-                <p>they are on their way to meet you at pick up location location</p>
-              }
+
               @else if(activeTrip.tripStatus==='Started'){
-                <h3>Trip started</h3>
-                <p>you are on your way to destination</p>
+          
+           <p>you are on your way to </p>
+           <p class="fw-bold"> {{activeTrip.destinationName}}</p>
+
               }
               
             }
-                    
-          <p class="fw-bold"> pickup:{{activeTrip.pickUpName}}</p>
-          <p class="fw-bold"> destinaiton:{{activeTrip.destinationName}}</p>
-         @if(activeTrip.tripStatus==='Requested'){
+           @if(activeTrip.tripStatus==='Requested'){
+            <p>from</p>
+           <p class="fw-bold">{{activeTrip.pickUpName}}</p>
+           <p>to</p>
+           <p class="fw-bold">{{activeTrip.destinationName}}</p>
 
-           <p class="fw-bold"> distance:{{activeTrip.distanceKm}} Km</p>
+           <p class="fw-bold"> distance: {{activeTrip.distanceKm.toFixed(2)}} Km</p>
            
-           <p class="fw-bold">estimated  duration:{{activeTrip.durationMinutes}} minutes</p>
-           <p class="fw-bold">price:{{activeTrip.price|currency:'USD'}}</p>
+           <p class="fw-bold">duration: {{activeTrip.durationMinutes.toFixed(2)}} minutes</p>
+           <p class="fw-bold">price:{{activeTrip.price.toFixed(1)|currency:'USD'}}</p>
          } 
           @if(this.role==="Rider"){
             

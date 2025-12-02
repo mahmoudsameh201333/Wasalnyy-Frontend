@@ -19,7 +19,7 @@ export class DashboardRedirectComponent implements OnInit {
   ngOnInit(): void {
     const token = this.authService.getToken();
     const role = this.authService.getRole()?.toLowerCase();
-   if(!token||!role) this.router.navigate(['/choose-user-type']);
+   if(!token||!role||this.authService.CheckTokenExpired(token)) this.router.navigate(['/choose-user-type']);
    else {
     console.log(this.accountService.getUserData());
      this.signalrService.startConnection().then(() => {
@@ -30,7 +30,7 @@ export class DashboardRedirectComponent implements OnInit {
            this.router.navigate([`/${role}-dashboard`]);
         } 
 
-      },3000);
+      },2000);
 
      });
 
