@@ -10,7 +10,6 @@ import { environment } from '../../enviroments/enviroment';
 })
 export class AccountDataService {
   private ApiUrl=environment.apiUrl;
-  private user:any;
   private token:string='';
   private role:string=''
   private headers:HttpHeaders|null=null;
@@ -23,15 +22,10 @@ export class AccountDataService {
           });
 
           }
-  updateUser(user:any){
-    this.user.next(user);
-  }
+  
   getUserData(){
    const url=`${this.ApiUrl}/${this.role}/Profile`;
-   this.httpClient.get(url,{headers:this.headers!}).subscribe({next:res=>{
-      this.user=res;
-    },
-      error:err=>{console.error(err)}});
+   return this.httpClient.get(url,{headers:this.headers!});
   }
   getDriverData(driverId:string){
     const url=`${this.ApiUrl}/Rider/DriverData`;

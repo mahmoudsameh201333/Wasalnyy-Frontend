@@ -27,7 +27,7 @@ export class DashboardRedirectComponent implements OnInit {
        if(this.tripInfoService.isInTripValue) {
           this.router.navigate([`/${role}-map`]);
         }else{
-           this.router.navigate([`/${role}-dashboard`]);
+           this.router.navigate([`/dashboard`]);
         } 
 
       },2000);

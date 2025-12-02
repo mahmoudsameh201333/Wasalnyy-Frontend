@@ -188,7 +188,7 @@ cancelTrip(tripId:any){
     });
 } 
 redirectToHomepge(){
-  this.router.navigate(['/driver-dashboard']);
+  this.router.navigate(['/dashboard']);
 }
 acknowledgeError(){
 

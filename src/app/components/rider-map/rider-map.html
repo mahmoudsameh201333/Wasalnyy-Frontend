@@ -15,15 +15,15 @@
       }
     @if(InTrip){
       @if(activeTrip.tripStatus==="Accepted"){
-        <app-driver-info-display [driver]="driver" [tripId]="activeTrip.id" (cancelTrip)="cancelTrip($event)" class="w-25 position-absolute z-2 bg-white rounded-3" style="margin-top: 50px; margin-left: 45px;" ></app-driver-info-display>
+        <app-driver-info-display [driver]="driver" [tripId]="activeTrip.id" (cancelTrip)="cancelTrip($event)" class=" position-absolute z-2 bg-white rounded-3" style="margin-top: 50px; margin-left: 45px; width: 350px;" ></app-driver-info-display>
       }
       @else {
-        <app-trip-component [activeTrip]="activeTrip" (confirmTripRequest)="confirmTripRequest($event)" (cancelTrip)="cancelTrip($event)" class="w-25 position-absolute z-2 bg-white" style="margin-top: 50px; margin-left: 45px;" ></app-trip-component>
+        <app-trip-component [activeTrip]="activeTrip" (confirmTripRequest)="confirmTripRequest($event)" (cancelTrip)="cancelTrip($event)" class="position-absolute z-2 bg-white rounded-3" style="margin-top: 50px; margin-left: 45px;width: 350px;" ></app-trip-component>
 
       }
      
             }@else{
-      <app-rider-sidebar class="z-2 position-absolute w-25" style="margin-top: 50px; margin-left: 45px;" 
+      <app-rider-sidebar class="z-2 position-absolute" style="margin-top: 50px; margin-left: 45px; width: 350px;" 
    (originSelected)="handleOriginUpdate($event)"
    (destinationSelected)="handleDestinationUpdate($event)"
    (paymentMethodSelected)="handlePaymenMethodUpdate($event)"

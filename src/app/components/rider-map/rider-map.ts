@@ -209,6 +209,6 @@ acknowledgeError(){
     })
   }
   redirectToHomepge(){
-  this.router.navigate(['/rider-dashboard']);
+  this.router.navigate(['/dashboard']);
 }
 }
